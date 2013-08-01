@@ -12,7 +12,7 @@ window.runFontSwitcher = function(){
   var allGoogleFontsCounter = 0;
   
   /* Select all current DOM elements */
-  var $all = $('body').find('*');
+  var $all = $('body, body *');
   
   /* Main functions */
   var switcher = function(){
@@ -32,10 +32,14 @@ window.runFontSwitcher = function(){
   };
   
   var containerKeydownHandler = function(e) {
-    if(e.stopPropagation) {
+    if(e.stopPropagation && (e.keyCode == 38 || e.keyCode == 40))
+    {
+      // execute it only for arrow UP and arrow DOWN
+      // we don't want to disable all chars and shortcuts.
       e.stopPropagation();
       e.preventDefault();
     }
+    
     if( e.keyCode == 38) { //up
       if( ++allGoogleFontsCounter === allGoogleFonts.items.length ) {
         allGoogleFontsCounter = 0;
@@ -47,7 +51,7 @@ window.runFontSwitcher = function(){
       }
     }
     else
-      return;
+      return true;
     switcher();
   };
 
@@ -82,7 +86,9 @@ window.runFontSwitcher = function(){
     + 'Font was not changed. Click me and then press key UP or key DOWN to switch font'
     + '</div>'
   )
-  .appendTo('body');
+  .appendTo('body')
+  .hide()
+  .fadeIn();
   
   var buttons = $(
   	'<div id="google-font-switcher-buttons">'
@@ -92,13 +98,15 @@ window.runFontSwitcher = function(){
   	+ '<a href="javascript:void(0)" class="google-font-switcher-browse">[browse&nbsp;ALL]</a>'
   	+ '<a href="javascript:void(0)" class="google-font-switcher-jump">[jump&nbsp;to...]</a>'
   	+ '</div>')
-  .insertAfter(container);
+  .insertAfter(container)
+  .hide()
+  .fadeIn();
   
   /* Create base CSS */
   registerCSS(
       '#google-font-switcher {height:40px;line-height:40px;font-size:20px !important;position:fixed; top:0;right:90px;background:#fff;color:#000;padding:0 10px;z-index:99999999}'
     + '#google-font-switcher:focus {border:1px dotted blue;border-top:none}'
-    + '#google-font-switcher span {font-size:20px !important;}'
+    + '#google-font-switcher span {line-height:40px;font-size:20px !important;}'
     + '#google-font-switcher span, #google-font-switcher-buttons a {font-family:Arial}'
     + '#google-font-switcher-buttons {font-size:14px !important;position:fixed;right:0;top:0;width:90px;background:#eee;}'
     + '#google-font-switcher-buttons a {text-align:center;color:#000;display:block;height:20px;line-height:20px;padding:0 10px;text-decoration:none}'
