@@ -8,19 +8,23 @@ window.runFontSwitcher = function(){
   .appendTo('body');
 
   window.registerCSS(
-      '#google-font-switcher {height:40px;line-height:40px;font-size:20px;position:fixed; top:0;right:90px;background:#fff;color:#000;padding:0 10px;z-index:99999999}'
+      '#google-font-switcher {height:40px;line-height:40px;font-size:20px !important;position:fixed; top:0;right:90px;background:#fff;color:#000;padding:0 10px;z-index:99999999}'
     + '#google-font-switcher:focus {border:1px dotted blue;border-top:none}'
-    + '#google-font-switcher-buttons {position:fixed;right:0;top:0;width:90px;background:#eee;}'
+    + '#google-font-switcher span {font-size:20px !important;}'
+    + '#google-font-switcher span, #google-font-switcher-buttons a {font-family:Arial}'
+    + '#google-font-switcher-buttons {font-size:14px !important;position:fixed;right:0;top:0;width:90px;background:#eee;}'
     + '#google-font-switcher-buttons a {text-align:center;color:#000;display:block;height:20px;line-height:20px;padding:0 10px;text-decoration:none}'
-    + '#google-font-switcher-buttons a:hover {text-decoration:underline}'
+    + '#google-font-switcher-buttons a:hover {text-decoration:underline;background-color:#fff}'
   );
+  
   var switcher = function(){
     var selectedFont = window.allGoogleFonts.items[window.allGoogleFontsCounter];
 
     window.registerCSS('http://fonts.googleapis.com/css?family=' + selectedFont.family, 'file');
-    window.runFontSwitcher.prototype.$all.css('font-family', selectedFont.family);
-    container.text("[" + (1+window.allGoogleFontsCounter) + "/" + window.allGoogleFonts.items.length +"] " + selectedFont.family);
+    window.runFontSwitcher.prototype.$all.css('font-family', '"'+selectedFont.family+'"');
+    container.html("<span>[" + (1+window.allGoogleFontsCounter) + "/" + window.allGoogleFonts.items.length +"]</span> " + selectedFont.family.replace('<', '&lt;'));
   };
+  
   var containerKeydownHandler = function(e) {
     if(e.stopPropagation) {
       e.stopPropagation();
