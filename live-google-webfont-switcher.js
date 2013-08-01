@@ -47,7 +47,13 @@ window.runFontSwitcher = function(){
     $(this).focus();
   });
 
-  var buttons = $('<div id="google-font-switcher-buttons"><a href="javascript:void(0)" class="google-font-switcher-add">[+]</a><a href="javascript:void(0)" class="google-font-switcher-browse-fav">[browse&nbsp;fav]</a><a href="javascript:void(0)" class="google-font-switcher-browse">[browse&nbsp;ALL]</a></div>')
+  var buttons = $(
+  	'<div id="google-font-switcher-buttons">'
+  	+ '<a href="javascript:void(0)" class="google-font-switcher-add">[+]</a>'
+  	+ '<a href="javascript:void(0)" class="google-font-switcher-browse-fav">[browse&nbsp;fav]</a>'
+  	+ '<a href="javascript:void(0)" class="google-font-switcher-browse">[browse&nbsp;ALL]</a>'
+  	+ '<a href="javascript:void(0)" class="google-font-switcher-jump">[jump&nbsp;to...]</a>'
+  	+ '</div>')
   .insertAfter(container);
 
   buttons
@@ -80,6 +86,17 @@ window.runFontSwitcher = function(){
   .find('.google-font-switcher-browse')
   .click(function(){
     containerKeydownHandler({keyCode:38});
+    return false;
+  });
+  
+  buttons
+  .find('.google-font-switcher-jump')
+  .click(function(){
+    var jumpTo = parseInt(prompt('Type font number...'));
+    if(!jumpTo)
+    	return false;
+    window.allGoogleFontsCounter = jumpTo-1;
+    switcher();
     return false;
   });
 
