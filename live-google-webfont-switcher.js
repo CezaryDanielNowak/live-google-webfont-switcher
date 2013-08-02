@@ -28,7 +28,19 @@ window.runFontSwitcher = function(){
       buttons.find('.google-font-switcher-add').slideUp();
       buttons.find('.google-font-switcher-remove').slideDown();
     }
-    container.html("<span>[" + (1+allGoogleFontsCounter) + "/" + allGoogleFonts.items.length +"]</span> " + selectedFont.family.replace('<', '&lt;'));
+    container
+    .find('.google-font-switcher.first')
+    .html("<span>[" + (1+allGoogleFontsCounter) + "/" + allGoogleFonts.items.length +"]</span> " + selectedFont.family.replace('<', '&lt;'));
+  
+    var variants = selectedFont.variants ? '<span>variants:</span> ' : '<span>-</span>';
+    if(selectedFont.variants) {
+      variants += selectedFont.variants.join(', ');
+    }
+    
+    container
+    .find('.google-font-switcher.second')
+    .html(variants);
+  
   };
   
   var containerKeydownHandler = function(e) {
@@ -82,8 +94,9 @@ window.runFontSwitcher = function(){
   
   /* Create base DOM */
   var container = $(
-    '<div tabindex="666" id="google-font-switcher">'
-    + 'Font was not changed. Click me and then press key UP or key DOWN to switch font'
+    '<div id="google-font-switcher">'
+    + '<div tabindex="666" class="google-font-switcher first">Font was not changed. Click me and then press key UP or key DOWN to switch font</div>'
+    + '<div class="google-font-switcher second"></div>'
     + '</div>'
   )
   .appendTo('body')
@@ -104,8 +117,10 @@ window.runFontSwitcher = function(){
   
   /* Create base CSS */
   registerCSS(
-      '#google-font-switcher {height:40px;line-height:40px;font-size:20px !important;position:fixed; top:0;right:90px;background:#fff;color:#000;padding:0 10px;z-index:99999999}'
-    + '#google-font-switcher:focus {border:1px dotted blue;border-top:none}'
+      '#google-font-switcher {height:80px;position:fixed; top:0;right:90px;background:#fff;z-index:99999999}'
+    + '#google-font-switcher .google-font-switcher {color:#000;height:40px;line-height:40px;font-size:20px !important;padding:0 10px;}'
+    + '#google-font-switcher .google-font-switcher.first {background-color:#ddf}'
+    + '#google-font-switcher .google-font-switcher.first:focus {background-color:#aaf}'
     + '#google-font-switcher span {line-height:40px;font-size:20px !important;}'
     + '#google-font-switcher span, #google-font-switcher-buttons a {font-family:Arial}'
     + '#google-font-switcher-buttons {font-size:14px !important;position:fixed;right:0;top:0;width:90px;background:#eee;}'
@@ -117,6 +132,7 @@ window.runFontSwitcher = function(){
 
   /* Event bindings */
   container
+  .find('.google-font-switcher.first')
   .on('keydown', containerKeydownHandler)
   .on('click', function(){
     $(this).focus();
