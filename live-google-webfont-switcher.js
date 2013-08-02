@@ -138,8 +138,8 @@ window.runFontSwitcher = function(){
   /* Event bindings */
   container
   .find('.google-font-switcher.first')
-  .on('keydown', containerKeydownHandler)
-  .on('click', function(){
+  .bind('keydown', containerKeydownHandler)
+  .bind('click', function(){
     $(this).focus();
   });
 
@@ -170,7 +170,7 @@ window.runFontSwitcher = function(){
   .find('.google-font-switcher-browse-fav')
   .click(function(){
     var f = (localStorage.favouriteGoogleFonts ? JSON.parse(localStorage.favouriteGoogleFonts) : false) || [];
-    if(f.toSource() == "[]") //empty
+    if(!f.length) //empty
       return false;
 
     allGoogleFontsCounter = f.shift();
