@@ -32,10 +32,14 @@ window.runFontSwitcher = function(){
     .find('.google-font-switcher.first')
     .html("<span>[" + (1+allGoogleFontsCounter) + "/" + allGoogleFonts.items.length +"]</span> " + selectedFont.family.replace('<', '&lt;'));
   
-    var variants = selectedFont.variants ? '<a href="http://www.google.com/fonts/specimen/'+ selectedFont.family.replace(' ', '+') +'" target="_blank"><span>font info:</span></a> ' : '<span>-</span>';
+    var variants = '<span>';
     if(selectedFont.variants) {
+      variants += 'variants: ';
       variants += selectedFont.variants.join(', ');
     }
+    variants += '; <a href="http://www.google.com/fonts/specimen/'+ selectedFont.family.replace(' ', '+') +'" target="_blank"><span>font info...</span></a>';
+    variants += '; <a href="http://www.google.com/fonts#UsePlace:use/Collection:'+ selectedFont.family.replace(' ', '+') + '" target="_blank"><span>use font...</span></a>';
+    variants += '</span>';
     
     container
     .find('.google-font-switcher.second')
@@ -117,9 +121,10 @@ window.runFontSwitcher = function(){
   
   /* Create base CSS */
   registerCSS(
-      '#google-font-switcher {height:80px;position:fixed; top:0;right:90px;background:#fff;z-index:99999999}'
-    + '#google-font-switcher .google-font-switcher {color:#000;height:40px;line-height:40px;font-size:20px !important;padding:0 10px;}'
+      '#google-font-switcher {max-height:80px;position:fixed; top:0;right:90px;background:#fff;z-index:99999999}'
+    + '#google-font-switcher .google-font-switcher {color:#000;max-height:40px;line-height:40px;font-size:20px !important;padding:0 10px;}'
     + '#google-font-switcher .google-font-switcher.first {background-color:#ddf}'
+    + '#google-font-switcher .google-font-switcher.second, #google-font-switcher .google-font-switcher.second span {font-size:16px !important}'
     + '#google-font-switcher .google-font-switcher.first:focus {background-color:#aaf}'
     + '#google-font-switcher span {line-height:40px;font-size:20px !important;}'
     + '#google-font-switcher span, #google-font-switcher-buttons a {font-family:Arial}'
