@@ -32,7 +32,7 @@ window.runFontSwitcher = function(){
     .find('.google-font-switcher.first')
     .html("<span>[" + (1+allGoogleFontsCounter) + "/" + allGoogleFonts.items.length +"]</span> " + selectedFont.family.replace('<', '&lt;'));
   
-    var variants = selectedFont.variants ? '<span>variants:</span> ' : '<span>-</span>';
+    var variants = selectedFont.variants ? '<a href="http://www.google.com/fonts/specimen/'+ selectedFont.family.replace(' ', '+') +'" target="_blank"><span>font info:</span></a> ' : '<span>-</span>';
     if(selectedFont.variants) {
       variants += selectedFont.variants.join(', ');
     }
