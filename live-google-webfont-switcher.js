@@ -128,7 +128,7 @@ window.runFontSwitcher = function(){
     + '#google-font-switcher .google-font-switcher.first:focus {background-color:#aaf}'
     + '#google-font-switcher span {line-height:40px;font-size:20px !important;}'
     + '#google-font-switcher span, #google-font-switcher-buttons a {font-family:Arial}'
-    + '#google-font-switcher-buttons {font-size:14px !important;position:fixed;right:0;top:0;width:90px;background:#eee;}'
+    + '#google-font-switcher-buttons {font-size:14px !important;position:fixed;right:0;top:0;width:90px;background:#eee;;z-index:99999999}'
     + '#google-font-switcher-buttons a {text-align:center;color:#000;display:block;height:20px;line-height:20px;padding:0 10px;text-decoration:none}'
     + '#google-font-switcher-buttons a:hover {text-decoration:underline;background-color:#fff !important}'
     + '#google-font-switcher-buttons a.google-font-switcher-add {background-color:#afa}'
