@@ -48,8 +48,7 @@ window.runFontSwitcher = function(){
   };
   
   var containerKeydownHandler = function(e) {
-    if(e.stopPropagation && (e.keyCode == 38 || e.keyCode == 40))
-    {
+    if(e.stopPropagation && (e.keyCode == 38 || e.keyCode == 40)) {
       // execute it only for arrow UP and arrow DOWN
       // we don't want to disable all chars and shortcuts.
       e.stopPropagation();
@@ -114,7 +113,8 @@ window.runFontSwitcher = function(){
   	+ '<a href="javascript:void(0)" class="google-font-switcher-browse-fav">[browse&nbsp;fav]</a>'
   	+ '<a href="javascript:void(0)" class="google-font-switcher-browse">[browse&nbsp;ALL]</a>'
   	+ '<a href="javascript:void(0)" class="google-font-switcher-jump">[jump&nbsp;to...]</a>'
-  	+ '</div>')
+  	+ '</div>'
+  )
   .insertAfter(container)
   .hide()
   .fadeIn();
