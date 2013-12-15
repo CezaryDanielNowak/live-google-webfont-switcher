@@ -1,4 +1,5 @@
 window.runFontSwitcher = function() {
+  var $ = jQuery;
   if($('#google-font-switcher').length) {
     console.log('Reinitializing...');
     $('#google-font-switcher,#google-font-switcher-buttons').remove();
@@ -107,14 +108,14 @@ window.runFontSwitcher = function() {
   .fadeIn();
   
   var buttons = $(
-  	'<div id="google-font-switcher-buttons">'
-  	+ '<a href="" class="google-font-switcher-add">&#9733;&nbsp;fav</a>'
-  	+ '<a href="" class="google-font-switcher-remove">&#9733;&nbsp;unfav</a>'
-  	+ '<a href="" class="google-font-switcher-browse-fav">[browse&nbsp;&#9733;&nbsp;fav]</a>'
-  	+ '<a href="" class="google-font-switcher-browse">[browse&nbsp;ALL]</a>'
-  	+ '<a href="" class="google-font-switcher-jump">[jump&nbsp;to...]</a>'
-  	+ '<a href="" class="google-font-switcher-find">[&#128269;&nbsp;find...]</a>'
-  	+ '</div>'
+    '<div id="google-font-switcher-buttons">'
+    + '<a href="" class="google-font-switcher-add">&#9733;&nbsp;fav</a>'
+    + '<a href="" class="google-font-switcher-remove">&#9733;&nbsp;unfav</a>'
+    + '<a href="" class="google-font-switcher-browse-fav">[browse&nbsp;&#9733;&nbsp;fav]</a>'
+    + '<a href="" class="google-font-switcher-browse">[browse&nbsp;ALL]</a>'
+    + '<a href="" class="google-font-switcher-jump">[jump&nbsp;to...]</a>'
+    + '<a href="" class="google-font-switcher-find">[&#128269;&nbsp;find...]</a>'
+    + '</div>'
   )
   .insertAfter(container)
   .hide()
@@ -198,7 +199,7 @@ window.runFontSwitcher = function() {
   .click(function() {
     var jumpTo = parseInt(prompt('Type font number...'), 10);
     if(!jumpTo) {
-    	return false;
+      return false;
     }
     allGoogleFontsCounter = jumpTo-1;
     switcher();
@@ -210,7 +211,7 @@ window.runFontSwitcher = function() {
   .click(function() {
     var found = false, keyword = prompt('Type font phrase...');
     if(!keyword) {
-    	return false;
+      return false;
     }
     for(var id in allGoogleFonts.items) {
       if(allGoogleFonts.items[id].family.toLowerCase().indexOf(keyword.toLowerCase()) !== -1) {
@@ -219,7 +220,7 @@ window.runFontSwitcher = function() {
       }
     }
     if(found === false) {
-    	return false;
+      return false;
     }
     allGoogleFontsCounter = 1*found;
     switcher();
