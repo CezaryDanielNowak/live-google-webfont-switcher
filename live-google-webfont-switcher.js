@@ -24,11 +24,11 @@ window.runFontSwitcher = function() {
     registerCSS('//fonts.googleapis.com/css?family=' + selectedFont.family, 'file');
     $all.css('font-family', '"'+selectedFont.family+'"');
     if(fontPositionInFavs() === -1) {
-      buttons.find('.google-font-switcher-add').slideDown();
-      buttons.find('.google-font-switcher-remove').slideUp();
+      buttons.find('.google-font-switcher-add').animate({height:20}, 100);
+      buttons.find('.google-font-switcher-remove').animate({height:0}, 100);
     } else {
-      buttons.find('.google-font-switcher-add').slideUp();
-      buttons.find('.google-font-switcher-remove').slideDown();
+      buttons.find('.google-font-switcher-add').animate({height:0}, 100);
+      buttons.find('.google-font-switcher-remove').animate({height:20}, 100);
     }
     container
     .find('.google-font-switcher.first')
@@ -99,7 +99,7 @@ window.runFontSwitcher = function() {
   /* Create base DOM */
   var container = $(
     '<div id="google-font-switcher">'
-    + '<div tabindex="666" class="google-font-switcher first">Font was not changed. Click me and then press key UP or key DOWN to switch font</div>'
+    + '<div tabindex="666" class="google-font-switcher first">Font was not changed. Click me and then press key UP &#9650; or key DOWN &#9660; to switch font</div>'
     + '<div class="google-font-switcher second"></div>'
     + '</div>'
   )
@@ -123,18 +123,20 @@ window.runFontSwitcher = function() {
   
   /* Create base CSS */
   registerCSS(
-      '#google-font-switcher {max-height:80px;position:fixed; top:0;right:110px;background:#fff;z-index:99999999}'
+      '#google-font-switcher {max-height:80px;position:fixed; top:0;right:110px;background:#fff;z-index:99999997;}'
+    + '#google-font-switcher, #google-font-switcher-buttons {box-shadow:0 0 3px #000;border-bottom-left-radius:5px;overflow:hidden}'
     + '#google-font-switcher .google-font-switcher {color:#000;max-height:40px;line-height:40px;font-size:20px !important;padding:0 10px;}'
-    + '#google-font-switcher .google-font-switcher.first {background-color:#ddf}'
+    + '#google-font-switcher .google-font-switcher.first {background-color:#ddf;cursor:hand;cursor:pointer;}'
     + '#google-font-switcher .google-font-switcher.second, #google-font-switcher .google-font-switcher.second span {font-size:16px !important}'
-    + '#google-font-switcher .google-font-switcher.first:focus {background-color:#aaf}'
+    + '#google-font-switcher .google-font-switcher.first:focus {background-color:#aaf;}'
     + '#google-font-switcher span {line-height:40px;font-size:20px !important;}'
     + '#google-font-switcher span, #google-font-switcher-buttons a {font-family:Arial}'
-    + '#google-font-switcher-buttons {font-size:14px !important;position:fixed;right:0;top:0;width:110px;background:#eee;;z-index:99999999}'
-    + '#google-font-switcher-buttons a {text-align:center;color:#000;display:block;height:20px;line-height:20px;padding:0 10px;text-decoration:none}'
+    + '#google-font-switcher-buttons {font-size:14px !important;position:fixed;right:0;top:0;width:110px;background:#eee;;z-index:99999998}'
+    + '#google-font-switcher-buttons a {overflow:hidden;text-align:center;color:#000;display:block;height:20px;line-height:20px;padding:0 10px;text-decoration:none}'
     + '#google-font-switcher-buttons a:hover {text-decoration:underline;background-color:#fff !important}'
-    + '#google-font-switcher-buttons a.google-font-switcher-add {background-color:#afa}'
-    + '#google-font-switcher-buttons a.google-font-switcher-remove {background-color:#faa}'
+    + '#google-font-switcher-buttons a:nth-child(2n) {background:#E0E0E0}'
+    + '#google-font-switcher-buttons a.google-font-switcher-add {height:0;background-color:#afa}'
+    + '#google-font-switcher-buttons a.google-font-switcher-remove {height:0;background-color:#faa}'
   );
 
   /* Event bindings */
@@ -152,7 +154,6 @@ window.runFontSwitcher = function() {
 
   buttons
   .find('.google-font-switcher-add')
-  .hide()
   .click(function() {
     var f = (localStorage.favouriteGoogleFonts ? JSON.parse(localStorage.favouriteGoogleFonts) : false) || [];
     f.push(allGoogleFontsCounter);
@@ -164,7 +165,6 @@ window.runFontSwitcher = function() {
   
   buttons
   .find('.google-font-switcher-remove')
-  .hide()
   .click(function() {
     var f = (localStorage.favouriteGoogleFonts ? JSON.parse(localStorage.favouriteGoogleFonts) : false) || [];
     f = f.filter(function(v) {return v !== allGoogleFontsCounter}); //remove deleted entry from array
