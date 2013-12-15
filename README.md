@@ -11,6 +11,7 @@ How to include
 * Option II:
   Insert `<script>` tag at the end of your document (before `</body>`)
   `<script src="https://raw.github.com/korpirkor/live-google-webfont-switcher/master/live-google-webfont-switcher.js"></script>`
+
 Screenshots
 ----------------------------
 ![Screenshot 1](/docs/1.png)
