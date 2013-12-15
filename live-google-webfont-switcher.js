@@ -20,13 +20,12 @@ window.runFontSwitcher = function() {
   var switcher = function() {
     var selectedFont = allGoogleFonts.items[allGoogleFontsCounter];
 
-    registerCSS('http://fonts.googleapis.com/css?family=' + selectedFont.family, 'file');
+    registerCSS('//fonts.googleapis.com/css?family=' + selectedFont.family, 'file');
     $all.css('font-family', '"'+selectedFont.family+'"');
     if(fontPositionInFavs() === -1) {
       buttons.find('.google-font-switcher-add').slideDown();
       buttons.find('.google-font-switcher-remove').slideUp();
-    }
-    else {
+    } else {
       buttons.find('.google-font-switcher-add').slideUp();
       buttons.find('.google-font-switcher-remove').slideDown();
     }
@@ -36,12 +35,11 @@ window.runFontSwitcher = function() {
   
     var variants = '<span>';
     if(selectedFont.variants) {
-      variants += 'variants: ';
-      variants += selectedFont.variants.join(', ');
+      variants += 'variants: ' + selectedFont.variants.join(', ');
     }
-    variants += '; <a href="http://www.google.com/fonts/specimen/'+ selectedFont.family.replace(' ', '+') +'" target="_blank"><span>font info...</span></a>';
-    variants += '; <a href="http://www.google.com/fonts#UsePlace:use/Collection:'+ selectedFont.family.replace(' ', '+') + '" target="_blank"><span>use font...</span></a>';
-    variants += '</span>';
+    variants += '; <a href="http://www.google.com/fonts/specimen/'+ selectedFont.family.replace(' ', '+') +'" target="_blank"><span>font info...</span></a>'
+    + '; <a href="http://www.google.com/fonts#UsePlace:use/Collection:'+ selectedFont.family.replace(' ', '+') + '" target="_blank"><span>use font...</span></a>'
+    + '</span>';
     
     container
     .find('.google-font-switcher.second')
@@ -57,18 +55,17 @@ window.runFontSwitcher = function() {
       e.preventDefault();
     }
     
-    if( e.keyCode == 38) { //up
-      if( ++allGoogleFontsCounter === allGoogleFonts.items.length ) {
+    if(e.keyCode == 38) { //up
+      if(++allGoogleFontsCounter === allGoogleFonts.items.length) {
         allGoogleFontsCounter = 0;
       }
-    }
-    else if (e.keyCode == 40) { //down
-      if( --allGoogleFontsCounter === -1 ) {
+    } else if (e.keyCode == 40) { //down
+      if(--allGoogleFontsCounter === -1) {
         allGoogleFontsCounter = allGoogleFonts.items.length-1;
       }
-    }
-    else
+    } else {
       return true;
+    }
     switcher();
   };
 
@@ -77,25 +74,26 @@ window.runFontSwitcher = function() {
     return f.indexOf(allGoogleFontsCounter);
   };
 
-  var registerCSS = function(styles, howToInsert) {
-    this.registered || (this.registered = {});
-
-    if( this.registered[styles] ) { //don't register same style second time.
-      return;
+  var registerCSS = (function() {
+    var css, registered = {};
+    return function(styles, howToInsert) {
+      if(registered[styles]) { //don't register same style second time.
+        return;
+      }
+      if(!howToInsert || howToInsert == 'inline') {
+        css = document.createElement('style');
+        css.type = 'text/css';
+        css.styleSheet ? (css.styleSheet.cssText = styles) : css.appendChild(document.createTextNode(styles));
+      } else {
+        css = document.createElement("link");
+        css.type = "text/css";
+        css.rel = "stylesheet";
+        css.href = styles;
+      }
+      document.getElementsByTagName("head")[0].appendChild(css);
+      registered[styles] = true;
     }
-    if(!howToInsert || howToInsert == 'inline') {
-      var css = document.createElement('style');
-      css.type = 'text/css';
-      css.styleSheet ? (css.styleSheet.cssText = styles) : css.appendChild(document.createTextNode(styles));
-    } else {
-      css = document.createElement("link")
-      css.type = "text/css"
-      css.rel = "stylesheet"
-      css.href = styles
-    }
-    document.getElementsByTagName("head")[0].appendChild(css);
-    this.registered[styles] = true;
-  };
+  })();
   
   /* Create base DOM */
   var container = $(
@@ -178,9 +176,9 @@ window.runFontSwitcher = function() {
   .find('.google-font-switcher-browse-fav')
   .click(function() {
     var f = (localStorage.favouriteGoogleFonts ? JSON.parse(localStorage.favouriteGoogleFonts) : false) || [];
-    if(!f.length) //empty
+    if(!f.length) { //empty
       return false;
-
+    }
     allGoogleFontsCounter = f.shift();
     f.push(allGoogleFontsCounter);
     localStorage.favouriteGoogleFonts = JSON.stringify(f);
@@ -191,7 +189,7 @@ window.runFontSwitcher = function() {
   buttons
   .find('.google-font-switcher-browse')
   .click(function() {
-    containerKeydownHandler({keyCode:38});
+    containerKeydownHandler({keyCode: 38});
     return false;
   });
 
@@ -214,7 +212,7 @@ window.runFontSwitcher = function() {
     if(!keyword) {
     	return false;
     }
-    for (var id in allGoogleFonts.items) {
+    for(var id in allGoogleFonts.items) {
       if(allGoogleFonts.items[id].family.toLowerCase().indexOf(keyword.toLowerCase()) !== -1) {
         found = id;
         break;
@@ -232,16 +230,17 @@ window.runFontSwitcher = function() {
 };
 
 /* Bootstrap */
-if(window.jQuery) {
-  runFontSwitcher();
-}
-else {
-  var s = document.createElement('script');
-  s.onerror = function() {
-    console.log("Can't load jQuery");
-  };
-  s.onload = runFontSwitcher;
-  s.setAttribute('src', 'http://code.jquery.com/jquery-latest.min.js');
-  document.getElementsByTagName('head')[0].appendChild(s);
-  console.log('Loading jQuery...');
-}
+(function() {
+  if(window.jQuery) {
+    runFontSwitcher();
+  } else {
+    var s = document.createElement('script');
+    s.onerror = function() {
+      console.log("Can't load jQuery");
+    };
+    s.onload = runFontSwitcher;
+    s.setAttribute('src', '//code.jquery.com/jquery-latest.min.js');
+    document.getElementsByTagName('head')[0].appendChild(s);
+    console.log('Loading jQuery...');
+  }
+})();
